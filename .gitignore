@@ -32,3 +32,4 @@
 *.app
 
 *.class
+./interview/coursera/cs_princeton/*.class
