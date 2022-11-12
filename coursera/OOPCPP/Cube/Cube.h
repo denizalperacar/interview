@@ -7,6 +7,8 @@ namespace uiuc {
             Cube();
             Cube(double length);
             Cube(const Cube & obj);
+            Cube & operator=(const Cube & obj);
+            ~Cube();
             double getVolume();
             double getSurfaceArea();
             void setLength(double length);
