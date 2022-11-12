@@ -132,7 +132,11 @@ numPtr; // same as before i.e. heap address
 - Remember that after the line "delete c;" the pointer c still stores the address of the deleted variable, which is no longer valid to dereference and is therefore dangerous. The pointer won't be automatically set to nullptr. Then, you should manually set c to nullptr if you want to better protect against coding mistakes:
 
 ```Cpp
+int *c = new int; 
 delete c; c = nullptr;
+
+int *d = new int[3];
+delete[] d;
 ```
 
 ### Arrow Operator ->
@@ -144,11 +148,82 @@ c1->getVolume();
 (*c1).getVolume();
 ```
 
-
 ## Reference Variable
+
 It will alais a piece of memory to give it a name.
 
 ```Cpp
 int *x = new int;
 int &v = *x;
 ```
+
+## Week 3
+
+Notes on the class creation are provided here:
+
+### Class constructors
+
+There is an automatic default constructor. It initializes all the member variables to their default values.
+
+- There may be more than one constructor definitions in the class.
+- If any constructor is defined the automatic default constructor will not be provided anymore.
+
+#### Costum default constructor
+
+- It overrides the ADC.
+- There are no arguments provided for this constructor.
+- It does not return anything to the user.
+
+```Cpp
+public:
+    Cube(); // Custom default constructor. 
+
+namespace uiuc {
+    Cube::Cube() {
+        length_ = 1;
+    }
+}
+
+```
+
+### Costum non-default constructors
+
+```Cpp
+// no return 
+Cube::Cube(double length) {
+    length_ = length;
+}
+
+```
+
+### Copy constructors
+
+A copy constructor allows us to create a copy of an existing object.
+
+- there is a default copy constructor.
+
+One can create costum copy constructors.
+
+- These constructors only have one argumet which is a `const` refernce to the same type object.
+
+```Cpp
+Cube::Cube(const Cube & obj);
+```
+
+- Copy constructors are involed automatically then the object is passed as a parameter (pass by value) or returning an object from a function (pass by value) or initializing a new object.
+- The default constructor works when an object is constructed, so if the obejct is constructed already and the copy is done, the copy constructor will not be invoked:
+
+```Cpp
+int main() {
+    Cube c; // DC
+    Cube d; // DC
+    c = d; // no constructor is invoked.
+}
+```
+
+### Copy Assignment
+
+### Variable Storage
+
+### Class Destructors
+
