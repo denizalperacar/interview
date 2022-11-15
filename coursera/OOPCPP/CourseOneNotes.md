@@ -95,7 +95,7 @@ int value_in_num = *p; // the value that p is holding is copied to value_in_num
 
 ## Heap Memory Notes
 
-This memory exists for more than the lifecycle of the function. 
+This memory exists for more than the lifecycle of the function.
 
 - Use `new` operator to allocate a memory in heap. This keyword return the pointer to the starting address of the data rather than the value.
 - This memory needs to be destoryed by `delete` operator.
@@ -156,7 +156,7 @@ int *d = new int[3];
 delete[] d;
 ```
 
-### Arrow Operator ->
+### Arrow Operator (->)
 
 ```Cpp
 Cube *c1 = new Cube;
@@ -165,7 +165,7 @@ c1->getVolume();
 (*c1).getVolume();
 ```
 
-## Reference Variable
+## Reference Variables
 
 It will alais a piece of memory to give it a name.
 
@@ -303,7 +303,7 @@ int main() {
 
 - Return by value - a copy is created
 - Return by pointer.
-- Return by refernce. Do return if the object is created in the heap. 
+- Return by refernce. Do return if the object is created in the heap.
 - Do not return by reference a memory create in stack
 
 ### Class Destructors
@@ -395,7 +395,7 @@ for (cosnt auto &i:vec) {...} // uses alias but makes it read only
 
 - Do not mix signed and unsigned integers in your code.
 - the underlying bit representation that unsigned integers use for these very large values is actually the same as the representation that signed integers use for their negative value range. This means that a negative signed int may be re-interpreted as a very large positive unsigned int, and vice versa.
-- The `size of containers` generally are `unsigned integers`. 
+- The `size of containers` generally are `unsigned integers`.
 
 ```Cpp
 // Casting to signed int first helps to ensure that the result
@@ -426,3 +426,110 @@ std::vector<T> // initialization
 ::size(); // number of elements
 ```
 
+### Template functions
+
+```Cpp
+template <typename T>
+class List {
+    ...
+    private:
+        T data_;
+};
+
+template <typename T>
+int max(T a, T b) {
+    if (a > b) { return a; }
+    return b; 
+}
+```
+
+- The errors are found in compile time
+
+### Inheritence
+
+- Inheritence allows us to inherit all the member functions and data from the base class to the derived class.
+- shape class -> Cube class
+
+lets define a class Shape:
+
+```Cpp
+#pragma once
+
+// Base class in Shape.h
+class Shape {
+    public:
+        Shape();
+        Shape(double width);
+        double getWidth() const; // equivalent to double getWidth(const Shape * this);
+
+    private:
+        double width_;
+};
+
+// derived class in Cube.h
+#pragma once
+
+#include "SHape.h"
+#include "HSLAPixel.h"
+
+namespace uiuc {
+    class Cube : public Shape {
+        public:
+            Cube(double width, uiuc::HSLAPixel color);
+            double getVolume() const;
+        
+        private:
+            uiuc::HSLAPixel color_;
+    };
+}
+
+// Cube.cpp
+
+#include "Cube.h"
+#include "Shape.h"
+
+namespace uiuc {
+    Cube::Cube(double width, uiuc::HSLAPixel coloe) : Shape(width) {
+        color_ = color;
+    }
+
+    double Cube::getVolume() const {
+        // this cannot access the Shape::width_ due to its being private
+        // instead one must use Shape::getWidth() which is a public function.
+
+        return getWidth() * getWidth() * getWidth();
+    }
+}
+```
+
+- `class Cube : public Shape {};` == `class Cube inherits from public class Shape {}`
+
+#### Initialization of Inheritance
+
+- When derived class is initialized, the derived class must construct the base class.
+- Cube must construct Shape
+- By default uses default constructor.
+- Custom constructor can be used with an initialization list.
+
+- `Cube::Cube(double width, uiuc::HSLAPixel coloe) : Shape(width)` intializes shape bu initialization list.
+
+#### Access Control
+
+When a base class is inherited, the derived class:
+
+- can access all `public memebers` of the base class.
+- Can `not` access the `private members` of the the base class.
+
+#### Initializer List
+
+It can be used to do the following:
+
+- Initialize the base class.
+- initialize the current class using another constructor.
+- initialize the default values of the member variables.
+
+```Cpp
+    Shape::Shape() : Shape(1) {}; // It uses the next constructor to initialize
+    Shape::Shape(double width) : width_(width) {};
+    double Shape::getWidth() const { return width_; };
+```
