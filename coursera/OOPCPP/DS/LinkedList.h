@@ -2,13 +2,6 @@
 
 #include <iostream>
 
-template<typename T> class LinkedList;
-
-template<typename T> std::ostream & operator<<(
-	std::ostream os, 
-	LinkedList<T> const &list
-);
-
 template<typename T>
 class LinkedList
 {
@@ -41,7 +34,6 @@ class LinkedList
 				os << node->data << " ";
 				node = node->next;
 			}
-			os << std::endl;
 			return os;
 		} 
 
