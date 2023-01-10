@@ -70,3 +70,23 @@ For implementation one can use either an array or a linked list.
 - link the memory backward
 - pop and push are O(1)
 
+## Stack
+
+Last in first out type of data structure.
+
+### ADT of stack
+
+same as the queue
+
+```C++
+#include <stack>
+std::stack<std::string> s;
+```
+
+### Implementation Array Based
+
+Put data one by one from start. pop from the last one.
+
+### Implementation Liked List
+
+same as Linked list implementation.
